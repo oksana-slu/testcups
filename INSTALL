@@ -1,0 +1,4 @@
+1) sudo easy_install virtualenv
+2) cd testcups 
+3) source ENV/bin/activate
+4) pip install -r requirements.txt
