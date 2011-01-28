@@ -7,15 +7,17 @@ import unittest
 class ContactTestCase(TestCase):
 
     def setUp(self):
-        self.contact = Contact.objects.create(name="alex", last_name="ivanov", birth="2011-01-02",bio="qwertyuiop", email="alex@gmail.com", jabber="jabber", skype="skype", other_contacts="no")
+        self.contact = Contact.objects.create(name="alex", last_name="ivanov",
+             birth="2011-01-02", bio="qwertyuiop", email="alex@gmail.com",
+                        jabber="jabber", skype="skype", other_contacts="no")
 
-    def testCRUD(self):        
+    def testCRUD(self):
         self.contact1 = Contact.objects.get(name="alex")
         self.assertEqual(self.contact, self.contact1)
         self.contact.delete()
         self.contact2 = Contact.objects.filter(name="alex")
         self.assertEqual(self.contact2.count(), 0)
-        
+
     def testhttp(self):
         page = self.client.get('/')
         self.assertEqual(page.status_code, 200)
@@ -23,4 +25,3 @@ class ContactTestCase(TestCase):
         self.assertNotEqual(word, -1)
         word1 = page.content.find('noword')
         self.assertEqual(word1, -1)
-

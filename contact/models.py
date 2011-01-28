@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Contact(models.Model):    
+class Contact(models.Model):
     name = models.CharField(max_length=100)
     last_name = models.CharField(blank=True, max_length=100)
     birth = models.DateField(blank=True)
@@ -10,6 +10,6 @@ class Contact(models.Model):
     jabber = models.CharField(blank=True, max_length=100)
     skype = models.CharField(blank=True, max_length=100)
     other_contacts = models.CharField(blank=True, max_length=200)
-    
+
     def __unicode__(self):
-        return self.name   
+        return self.name
