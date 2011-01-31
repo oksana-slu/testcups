@@ -77,6 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'testcups.middleware.middleware.RequestMiddleware',
 )
 
 ROOT_URLCONF = 'testcups.urls'
@@ -97,4 +98,5 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'testcups.contact',
+    'testcups.middleware',
 )
