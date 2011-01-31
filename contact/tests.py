@@ -2,6 +2,7 @@ from django.test.client import Client
 from django.test import TestCase
 from testcups.contact.models import Contact
 import unittest
+from django.conf import settings
 
 
 class ContactTestCase(TestCase):
@@ -25,3 +26,5 @@ class ContactTestCase(TestCase):
         self.assertNotEqual(word, -1)
         word1 = page.content.find('noword')
         self.assertEqual(word1, -1)
+        word_context = page.content.find(settings.TIME_ZONE)
+        self.assertNotEqual(word_context, -1)
