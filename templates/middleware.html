@@ -1,0 +1,43 @@
+{% extends "contact.html" %}
+{% block title %}Middleware{% endblock %}
+{% block body %}
+<div style="float:left; width: 800px;">
+{% for item in middleware %}
+<br>
+<table border="1" width="90%">
+    <tr>
+        <td width="30%">
+            user
+        </td>            
+        <td>
+            {{ item.user }}
+        </td>
+    </tr>
+    <tr>
+        <td width="30%">
+            lang
+        </td>            
+        <td>
+            {{ item.lang }}
+        </td>
+    </tr>    
+    <tr>
+        <td width="30%">
+            path_info
+        </td>            
+        <td>
+            {{ item.path_info }}
+        </td>
+    </tr>
+    <tr>
+        <td width="30%">
+            remote_addr
+        </td>            
+        <td>
+            {{ item.remote_addr }}
+        </td>
+    </tr>     
+</table>
+{% endfor %}
+</div>    
+{% endblock body %}
