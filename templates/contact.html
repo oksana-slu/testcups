@@ -88,15 +88,27 @@
 </table> 
 </div>
 </div>
+
+{% if user.is_authenticated %}
+    {{ user.username }} | <a href="/edit_contact">edit data, presented on the page | </a>  
+    <br><a href="{% url  auth_logout %}">Logout</a>   
+{% else %}
+    <a href="{% url auth_login %}">Login</a>
+{% endif %}
+
+
+{% endblock body %}
+{% block request %}
 <div style="float:left; width: 800px;">
 <hr>
 <a href="/middleware">requests</a>
+{% block context %}
 <h4>Examples context-processor</h4>
 <p>SITE_ROOT - {{ settings.SITE_ROOT }} 
 <p> TEMPLATE_CONTEXT_PROCESSORS - {{ settings.TEMPLATE_CONTEXT_PROCESSORS }}
 <p> TIME_ZONE - {{ settings.TIME_ZONE }}
+{% endblock context %}
 </div>
-
-{% endblock body %}
+{% endblock request %}
 </body>
 </html>
