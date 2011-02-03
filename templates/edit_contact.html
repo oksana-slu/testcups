@@ -1,7 +1,57 @@
 {% extends "contact.html" %}
-
+{% block title %}Edit contact{% endblock title %}
 {% block body %}
 <div style="float:left; width: 800px;">
+<div style="width: 350px; float: left;">
+<form action="" method="post">
+{% csrf_token %}
+<table>
+    {% for field in form %}
+    {% if forloop.counter == 5 %}
+</table>
+</div>
+<div style="width: 350px; float: right;">
+<table>
+{% endif %}  
+    <tr>
+        <td></td>
+        <td>
+            
+            {% if field.errors %}
+            <ul><span style="color: red;">
+             {% for error in field.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+            </span>
+            </ul>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ field.label_tag }}:
+        </td>
+        <td>
+            {{ field }}
+            
+        </td>
+    <tr><td></td>
+        <td>
+        {{ field.help_text }}
+        </td>
+    </tr>
+    
+
+  
+{% endfor %}
+</div>
+</table>
+</div>
+<div style="float:left; width: 800px; margin-left: 20px;">
+<input value="Save" name="Form_seve" type="submit" />
+<a href="/">Cancel</a>
 </div>
 {% endblock body %}
+{% block context %}
+{% endblock context %}
 

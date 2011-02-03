@@ -1,5 +1,5 @@
 {% extends "contact.html" %}
-
+{% block title %}Login{% endblock title %}
 {% block body %}
 <div style="float:left; width: 800px;">
 {% if form.errors %}
@@ -24,4 +24,5 @@
 </form>
 </div>
 {% endblock body %}
-
+{% block request %}
+{% endblock request %}
