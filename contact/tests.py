@@ -3,6 +3,7 @@ from django.test import TestCase
 from testcups.contact.models import Contact
 import unittest
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class ContactTestCase(TestCase):
@@ -29,3 +30,32 @@ class ContactTestCase(TestCase):
         word_context = page.content.find(settings.TIME_ZONE)
         self.assertNotEqual(word_context, -1)
 
+
+class EditContactTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user('john', 'lennon@thebeatles.com',
+                                             'johnpassword')
+    
+    def testhttp(self):
+        page_login = self.client.post('/accounts/login/',
+                            {'username': 'john', 'password': 'johnpassword'})
+        self.assertEqual(page_login.status_code, 302)
+        message = page_login.content.find('match')
+        self.assertEqual(message, -1)
+        page_edit = self.client.get('/edit_contact/')
+        self.assertEqual(page_edit.status_code, 200)
+        word = page_edit.content.find('oksana')
+        self.assertNotEqual(word, -1)
+        page_edit = self.client.post('/edit_contact/', {'name': 'john'})
+        word = page_edit.content.find('john')
+        self.assertNotEqual(word, -1)
+        page_login = self.client.post('/accounts/login/',
+                            {'username': '', 'password': ''})
+        self.assertEqual(page_login.status_code, 200)
+        message = page_login.content.find('match')
+        self.assertNotEqual(message, -1)
+        page_logout = self.client.post('/logout/')
+        self.assertEqual(page_logout.status_code, 200)
+        page_edit = self.client.get('/edit_contact/')
+        self.assertEqual(page_edit.status_code, 302)      
