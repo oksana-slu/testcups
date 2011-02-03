@@ -7,3 +7,8 @@ def contact(request):
     contact = Contact.objects.get(id=1)
     return render_to_response('contact.html',
            context_instance=RequestContext(request, {'contact': contact}))
+           
+           
+def edit_contact(request):
+    return render_to_response('edit_contact.html',
+           context_instance=RequestContext(request, {}))
