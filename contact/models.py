@@ -14,9 +14,3 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return self.name
-        
-        
-class ContactForm(ModelForm):
-    class Meta:
-        model = Contact
-

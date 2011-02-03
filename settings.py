@@ -109,4 +109,4 @@ INSTALLED_APPS = (
     'testcups.middleware',
 )
 
-LOGIN_REDIRECT_URL = '/edit_contact/'
+LOGIN_REDIRECT_URL = '/'
