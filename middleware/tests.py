@@ -13,8 +13,7 @@ class MiddlewareTestCase(TestCase):
         self.middleware1 = Middleware.objects.get(id=1)
         self.assertEqual(self.middleware, self.middleware1)
         self.middleware.delete()
-        
+
     def testhttp(self):
         page = self.client.get('/middleware/')
         self.assertEqual(page.status_code, 200)
-        

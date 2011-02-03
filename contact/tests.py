@@ -36,7 +36,7 @@ class EditContactTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com',
                                              'johnpassword')
-    
+
     def testhttp(self):
         page_login = self.client.post('/accounts/login/',
                             {'username': 'john', 'password': 'johnpassword'})
@@ -58,4 +58,4 @@ class EditContactTestCase(TestCase):
         page_logout = self.client.post('/logout/')
         self.assertEqual(page_logout.status_code, 200)
         page_edit = self.client.get('/edit_contact/')
-        self.assertEqual(page_edit.status_code, 302)      
+        self.assertEqual(page_edit.status_code, 302)

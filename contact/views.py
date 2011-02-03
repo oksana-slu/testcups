@@ -11,13 +11,13 @@ def contact(request):
     contact = Contact.objects.get(id=1)
     return render_to_response('contact.html',
            context_instance=RequestContext(request, {'contact': contact}))
-        
-        
+
+
 class ContactForm(ModelForm):
     class Meta:
         model = Contact
 
-           
+
 @login_required
 def edit_contact(request):
     if request.method == 'POST':
@@ -26,5 +26,5 @@ def edit_contact(request):
             form.save()
     else:
         form = ContactForm(instance=Contact.objects.get(id=1))
-    return render_to_response("edit_contact.html", RequestContext(request, {'form': form}))
-
+    return render_to_response("edit_contact.html",
+                              RequestContext(request, {'form': form}))
