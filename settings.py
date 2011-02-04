@@ -76,7 +76,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.contrib.messages.context_processors.messages",
-    "testcups.context_processors.settings_processor",
+    "testcups.contact.context_processors.settings_processor",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,17 +85,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'testcups.middleware.middleware.RequestMiddleware',
+    'testcups.contact.middleware.RequestMiddleware',
 )
 
 ROOT_URLCONF = 'testcups.urls'
 
 TEMPLATE_DIRS = (
-    SITE_ROOT + "/templates",
+    os.path.join(SITE_ROOT, 'templates'),
 )
 
 FIXTURE_DIRS = (
-    SITE_ROOT + "/fixtures",
+    os.path.join(SITE_ROOT, 'fixtures'),
 )
 
 INSTALLED_APPS = (

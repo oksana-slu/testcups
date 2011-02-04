@@ -6,4 +6,4 @@ from testcups.middleware.models import Middleware
 def middleware(request):
     middleware = Middleware.objects.all().order_by('-id')[0:10]
     return render_to_response('middleware.html',
-           context_instance=RequestContext(request, {'middleware': middleware}))
+         context_instance=RequestContext(request, {'middleware': middleware}))

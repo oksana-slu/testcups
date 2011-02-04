@@ -10,10 +10,10 @@ class RequestMiddleware(object):
         if 'LANG' in request.META:
             lang = request.META['LANG']
         else:
-            lang = ''            
+            lang = ''
         inst = Middleware()
         inst.user = user
-        inst.lang = lang        
+        inst.lang = lang
         inst.path_info = request.META['PATH_INFO']
-        inst.remote_addr = request.META['REMOTE_ADDR']        
+        inst.remote_addr = request.META['REMOTE_ADDR']
         inst.save()
