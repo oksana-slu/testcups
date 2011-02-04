@@ -24,6 +24,7 @@ def edit_contact(request):
         form = ContactForm(request.POST, instance=Contact.objects.get(id=1))
         if form.is_valid():
             form.save()
+            return HttpResponseRedirect('/')
     else:
         form = ContactForm(instance=Contact.objects.get(id=1))
     return render_to_response("edit_contact.html",
