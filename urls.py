@@ -6,6 +6,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', include("testcups.contact.urls")),
-    url(r'^middleware/$', "middleware.views.middleware"),
+    url(r'^middleware/$', "contact.views.middleware"),    
     (r'^admin/', include(admin.site.urls)),
 )
