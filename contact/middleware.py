@@ -1,4 +1,4 @@
-from testcups.middleware.models import Middleware
+from testcups.contact.models import Middleware
 
 
 class RequestMiddleware(object):

@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 class Contact(models.Model):
@@ -14,3 +15,10 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Middleware(models.Model):
+    user = models.ForeignKey(User, null=True)
+    lang = models.CharField(max_length=100, null=True)
+    path_info = models.CharField(max_length=100)
+    remote_addr = models.CharField(max_length=100)
