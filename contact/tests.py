@@ -1,9 +1,12 @@
 from django.test.client import Client
 from django.test import TestCase
-from testcups.contact.models import Contact
+from testcups.contact.models import Contact, Middleware
 import unittest
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.test.client import Client
+from django.test import TestCase
+import unittest
 
 
 class ContactTestCase(TestCase):
@@ -59,3 +62,18 @@ class EditContactTestCase(TestCase):
         self.assertEqual(page_logout.status_code, 200)
         page_edit = self.client.get('/edit_contact/')
         self.assertEqual(page_edit.status_code, 302)
+
+
+class MiddlewareTestCase(TestCase):
+
+    def setUp(self):
+        self.middleware = Middleware.objects.create()
+
+    def testCRUD(self):
+        self.middleware1 = Middleware.objects.get(id=1)
+        self.assertEqual(self.middleware, self.middleware1)
+        self.middleware.delete()
+
+    def testhttp(self):
+        page = self.client.get('/middleware/')
+        self.assertEqual(page.status_code, 200)
