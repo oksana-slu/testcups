@@ -5,7 +5,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^$', "contact.views.contact"),
+    url(r'^$', include("testcups.contact.urls")),
     url(r'^middleware/$', "middleware.views.middleware"),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',
         {'template_name': 'login.html'}, name='auth_login'),
