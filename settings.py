@@ -95,7 +95,7 @@ TEMPLATE_DIRS = (
 )
 
 FIXTURE_DIRS = (
-    os.path.join(SITE_ROOT, 'fixtures'),
+    os.path.join(SITE_ROOT, 'contact', 'fixtures'),
 )
 
 INSTALLED_APPS = (
@@ -105,7 +105,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'testcups.contact',    
+    'testcups.contact',
 )
 
 LOGIN_REDIRECT_URL = '/'
