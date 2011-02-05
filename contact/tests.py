@@ -31,8 +31,7 @@ class ContactTestCase(TestCase):
         self.assertNotEqual(word_context, -1)
 
 
-'''test for t5_edit_contact'''
-'''class EditContactTestCase(TestCase):
+class EditContactTestCase(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com',
@@ -59,7 +58,7 @@ class ContactTestCase(TestCase):
         page_logout = self.client.post('/logout/')
         self.assertEqual(page_logout.status_code, 200)
         page_edit = self.client.get('/edit_contact/')
-        self.assertEqual(page_edit.status_code, 302)'''
+        self.assertEqual(page_edit.status_code, 302)
 
 
 class MiddlewareTestCase(TestCase):
