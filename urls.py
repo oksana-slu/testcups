@@ -5,7 +5,6 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^$', include("testcups.contact.urls")),
-    url(r'^middleware/$', "contact.views.middleware"),    
+    url(r'', include("testcups.contact.urls")),
     (r'^admin/', include(admin.site.urls)),
 )

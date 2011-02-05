@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
 
-urlpatterns = patterns('',
-    url(r'^$', "contact.views.contact"),    
+urlpatterns = patterns('contact.views',
+    url(r'^$', "contact", name='contact_home'),
+    url(r'^middleware/$', "middleware", name='contact_middleware'),
 )
