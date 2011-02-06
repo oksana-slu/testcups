@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
+from django.contrib.admin import widgets
 
 
 def contact(request):
@@ -13,9 +14,12 @@ def contact(request):
            context_instance=RequestContext(request, {'contact': contact}))
 
 
-class ContactForm(ModelForm):
+class ContactForm(ModelForm):    
     class Meta:
         model = Contact
+        widgets = {
+            'birth': widgets.AdminDateWidget
+        }
 
 
 def middleware(request):
