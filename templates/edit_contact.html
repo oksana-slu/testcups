@@ -5,73 +5,70 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.form.js"></script> 
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.blockUI.js"></script>
 {{ form.media }}
-
+<script type="text/javascript">
+window.__admin_media_prefix__ = "{{ settings.ADMIN_MEDIA_PREFIX }}"; 
+</script>
+<style type="text/css" media="screen">
+  .datetimeshortcuts img {border:0;}
+</style>
 <script type="text/javascript"> 
 $(document).ready(function() {
-var options = {
-	  beforeSubmit:	function() {
-	  $.blockUI({ message: "Processing…"});
-	  }, 
-	  success: function() {
-	  $.unblockUI();
-	  }
-	};
-    
+    var options = {
+	beforeSubmit:	function() {
+	    $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        }});	    
+	},
+	dataType: 'json',
+	success: function(responce) {
+	    $.unblockUI();
+            if (responce.status=="OK")
+	    {
+		$('#bloc').hide();
+		$('#form_save_status').show();		
+		$('#form_container').html(responce.text);
+		$('#form_save_status').fadeOut(3000, function() {
+		    $('#form_save_status').hide();
+		    $('#bloc').show();
+		});
+	    }
+            else 
+	    {
+		$('#form_container').html(responce.text);
+	    }	    
+	    DateTimeShortcuts.addCalendar(document.getElementById('id_birth'));
+	}
+    };    
     $('#formContact').ajaxForm(options);
 }); 
 </script> 
 {% endblock script %}
 {% block body %}
 <div style="float:left; width: 800px;">
-<div style="width: 350px; float: left;">
-<form id="formContact" action="/edit_contact/" method="post">
-{% csrf_token %}
-<table>
-    {% for field in form %}
-    {% if forloop.counter == 5 %}
-</table>
+<div id="bloc" style="height: 40px">&nbsp</div>
+<div id="form_save_status" style="display:none; color:green; height: 40px">
+Changes have been successfully saved
 </div>
-<div style="width: 350px; float: right;">
-<table>
-{% endif %}
-{% if field.errors %}  
-    <tr>
-        <td></td>
-        <td>           
-            <span style="color: red;">
-             {% for error in field.errors %}
-                <strong>{{ error|escape }}</strong>
-            {% endfor %}
-            </span>            
-        </td>
-    </tr>
-{% endif %}
-    <tr>
-        <td>
-            {{ field.label_tag }}:
-        </td>
-        <td>
-            {{ field }}
-            
-        </td>
-    </tr>
-{% if field.help_text %}} 
-    <tr><td></td>
-        <td>
-        {{ field.help_text }}
-        </td>
-    </tr>
-{% endif %}    
+<form id="formContact" action="{% url contact_edit %}" method="post">
+<div id="form_container">
 
-  
-{% endfor %}
+{% include "edit_contact_form.html" %}
+
 </div>
-</table>
-</div>
+
 <div style="float:left; width: 800px; margin-left: 20px;">
 <input value="Save" name="Form_save" type="submit" />
-</form>
 <a href="{% url contact_home %}">Cancel</a>
+</div>
+</form>
+
+
 </div>
 {% endblock body %}
 {% block context %}
