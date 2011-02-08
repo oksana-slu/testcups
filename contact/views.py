@@ -4,6 +4,7 @@ from testcups.contact.models import Contact, Middleware
 from testcups.contact.forms import ContactForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.utils import simplejson
 
 
 def contact(request):
@@ -19,13 +20,14 @@ def middleware(request):
 
 
 @login_required
-def edit_contact(request):
+def edit_contact(request):    
     if request.method == 'POST':
         form = ContactForm(request.POST, instance=Contact.objects.get(id=1))
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/')
+            #return HttpResponseRedirect('/')
     else:
         form = ContactForm(instance=Contact.objects.get(id=1))
     return render_to_response("edit_contact.html",
                               RequestContext(request, {'form': form}))
+
