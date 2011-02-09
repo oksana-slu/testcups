@@ -1,7 +1,7 @@
 {% csrf_token %}
 <div style="width: 350px; float: left;">
 <table>
-    {% for field in form %}
+    {% for field in form reversed %}
     {% if forloop.counter == 5 %}
 </table>
 </div>
