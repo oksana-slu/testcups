@@ -45,6 +45,9 @@ class EditContactTestCase(TestCase):
         self.assertEqual(message, -1)
         page_edit = self.client.get('/edit_contact/')
         self.assertEqual(page_edit.status_code, 200)
+        '''fofm reversed'''
+        self.assertTrue(page_edit.content.find('id_skype') <
+                        page_edit.content.find('id_last_name'))
         word = page_edit.content.find('oksana')
         self.assertNotEqual(word, -1)
         page_edit = self.client.post('/edit_contact/', {'name': 'john'},
