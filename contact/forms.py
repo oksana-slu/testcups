@@ -11,21 +11,19 @@ class CalendarWidget(forms.TextInput):
               settings.ADMIN_MEDIA_PREFIX + "js/calendar.js",
               settings.ADMIN_MEDIA_PREFIX + "js/admin/DateTimeShortcuts.js")
         css = {
-            'all': (                
+            'all': (
                 settings.ADMIN_MEDIA_PREFIX + 'css/widgets.css',
                 )
         }
 
     def __init__(self, attrs={}):
-        super(CalendarWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'})
+        super(CalendarWidget, self).__init__(attrs={'class': 'vDateField',
+                                                    'size': '10'})
 
 
-
-class ContactForm(ModelForm):    
+class ContactForm(ModelForm):
     class Meta:
         model = Contact
         widgets = {
             'birth': CalendarWidget
         }
-
-
