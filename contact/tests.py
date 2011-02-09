@@ -47,7 +47,8 @@ class EditContactTestCase(TestCase):
         self.assertEqual(page_edit.status_code, 200)
         word = page_edit.content.find('oksana')
         self.assertNotEqual(word, -1)
-        page_edit = self.client.post('/edit_contact/', {'name': 'john'})
+        page_edit = self.client.post('/edit_contact/', {'name': 'john'},
+                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         word = page_edit.content.find('john')
         self.assertNotEqual(word, -1)
         page_login = self.client.post('/accounts/login/',
