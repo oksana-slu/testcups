@@ -12,5 +12,5 @@ class Command(AppCommand):
         for item_model in models.get_models(app):
             name = item_model._meta.object_name
             count = str(item_model.objects.all().count())
-            self.stdout.write(name + " " + count + '\n')                      
-            self.stderr.write("Error: " + name + " " + count + '\n') 
+            self.stdout.write(name + " " + count + '\n')
+            self.stderr.write("Error: " + name + " " + count + '\n')
