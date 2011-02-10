@@ -8,6 +8,7 @@
 {% endblock script %}
 </head>
 <body>
+
 {% block header %}
 <div style="float:left; width: 800px;">
 <h3>42 Coffee Cups Test Assignment</h3>
@@ -90,9 +91,15 @@
 </table> 
 </div>
 </div>
+{% load contact_tags %}
 
 {% if user.is_authenticated %}
-    {{ user.username }} | <a href="{% url contact_edit %}">edit data, presented on the page | </a>  
+    {{ user.username }} |  
+    <a href="{% url contact_edit %}">Edit data, presented on the page</a>
+    {% if user.is_superuser %}
+    <br><a href="{% admin_edit_page contact %}">Edit data, presented on the page on admin page</a>  
+    <br><a href="{% admin_edit_page user %}">Edit {{ user }}</a>
+    {% endif %} 
     <br><a href="{% url  auth_logout %}">Logout</a>   
 {% else %}
     <a href="{% url auth_login %}">Login</a>
