@@ -45,11 +45,11 @@ class EditContactTestCase(TestCase):
         self.assertEqual(message, -1)
         page_edit = self.client.get('/edit_contact/')
         self.assertEqual(page_edit.status_code, 200)
+        word = page_edit.content.find('oksana')
+        self.assertNotEqual(word, -1)
         '''fofm reversed'''
         self.assertTrue(page_edit.content.find('id_skype') <
                         page_edit.content.find('id_last_name'))
-        word = page_edit.content.find('oksana')
-        self.assertNotEqual(word, -1)
         page_edit = self.client.post('/edit_contact/', {'name': 'john'},
                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         word = page_edit.content.find('john')
@@ -63,6 +63,13 @@ class EditContactTestCase(TestCase):
         self.assertEqual(page_logout.status_code, 200)
         page_edit = self.client.get('/edit_contact/')
         self.assertEqual(page_edit.status_code, 302)
+        '''check work template tag'''
+        self.failUnlessEqual(self.client.login(username='admin',
+                                               password='admin'), True)
+        response = self.client.get('/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failIfEqual(response.content.find('/admin/contact/contact/1/'),
+                                                                        -1)
 
 
 class MiddlewareTestCase(TestCase):
