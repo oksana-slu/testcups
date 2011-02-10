@@ -4,6 +4,7 @@ from testcups.contact.models import Contact, Middleware
 import unittest
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core import management
 
 
 class ContactTestCase(TestCase):
@@ -69,7 +70,9 @@ class EditContactTestCase(TestCase):
         response = self.client.get('/')
         self.failUnlessEqual(response.status_code, 200)
         self.failIfEqual(response.content.find('/admin/contact/contact/1/'),
-                                                                        -1)
+                                                                       -1)
+        '''check work command django-admin'''
+        management.call_command('printmod', 'contact', param1='foo')
 
 
 class MiddlewareTestCase(TestCase):
