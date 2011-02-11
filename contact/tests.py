@@ -72,7 +72,7 @@ class EditContactTestCase(TestCase):
         self.failIfEqual(response.content.find('/admin/contact/contact/1/'),
                                                                        -1)
         '''check work command django-admin'''
-        management.call_command('printmod', 'contact', param1='foo')
+        management.call_command('printmod', param1='foo')
 
 
 class MiddlewareTestCase(TestCase):
