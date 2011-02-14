@@ -1,6 +1,9 @@
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Message
+from django.contrib.sessions.models import Session
+from django.db.models.signals import post_save, post_delete
 
 
 class Contact(models.Model):
@@ -22,3 +25,35 @@ class Middleware(models.Model):
     lang = models.CharField(max_length=100, null=True)
     path_info = models.CharField(max_length=100)
     remote_addr = models.CharField(max_length=100)
+
+
+EVENT_CHOICES = (
+    ('create', 'create'),
+    ('edit', 'edit'),
+    ('delete', 'delete'),
+    )
+
+
+class ModelLog(models.Model):
+    model_log = models.ForeignKey(ContentType)
+    object_id = models.IntegerField()
+    event = models.CharField(max_length=6)
+    stamp = models.DateTimeField(auto_now_add=True)
+
+
+EVENT_CHOICES_DICT = {None: 'delete',
+                      True: 'create',
+                      False: 'edit'}
+
+
+def event_callback(sender, instance, **kwargs):
+    if sender not in (ModelLog, Middleware, Message, Session):
+        content_type = ContentType.objects.get_for_model(sender)
+        ModelLog.objects.create(model_log=content_type,
+                                object_id=instance.id,
+                                event=EVENT_CHOICES_DICT[kwargs.get('created',
+                                                                    None)])
+
+
+post_save.connect(event_callback)
+post_delete.connect(event_callback)

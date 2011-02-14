@@ -1,5 +1,5 @@
 from django.contrib import admin
-from testcups.contact.models import Contact, Middleware
+from testcups.contact.models import Contact, Middleware, ModelLog
 
 
 class ContactAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class MiddlewareAdmin(admin.ModelAdmin):
 
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Middleware, MiddlewareAdmin)
+admin.site.register(ModelLog)

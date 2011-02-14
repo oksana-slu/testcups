@@ -1,6 +1,6 @@
 from django.test.client import Client
 from django.test import TestCase
-from testcups.contact.models import Contact, Middleware
+from testcups.contact.models import Contact, Middleware, ModelLog
 import unittest
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -18,6 +18,11 @@ class ContactTestCase(TestCase):
                   jabber="jabber", skype="skype", other_contacts="no")
 
     def testCRUD(self):
+        '''check work'''
+        id_obj = self.contact.id
+        self.signal_obj = ModelLog.objects.get(model_log=self.contact,
+                                               object_id=id_obj)
+        self.assertEqual('create', self.signal_obj.event)
         self.contact1 = Contact.objects.get(name="alex")
         self.assertEqual(self.contact, self.contact1)
         self.contact.delete()
