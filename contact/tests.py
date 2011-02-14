@@ -5,6 +5,9 @@ import unittest
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import management
+import sys
+import filecmp
+import os
 
 
 class ContactTestCase(TestCase):
@@ -72,7 +75,31 @@ class EditContactTestCase(TestCase):
         self.failIfEqual(response.content.find('/admin/contact/contact/1/'),
                                                                        -1)
         '''check work command django-admin'''
-        management.call_command('printmod', param1='foo')
+        stderr = sys.stderr
+        stdout = sys.stdout
+        sys.stderr = open('error.log', 'w')
+        sys.stdout = open('out.log', 'w')
+        management.call_command('printmod')
+        sys.stderr = stderr
+        sys.stdout = stdout
+        a = '''Error: Permission 33
+Error: Group 0
+Error: User 2
+Error: Message 0
+Error: ContentType 11
+Error: Session 1
+Error: Site 1
+Error: LogEntry 0
+Error: Contact 1
+Error: Middleware 7
+Error: ModelLog 52
+'''
+        f = open('error.log', 'r')
+        b = f.read()
+        f.close()
+        self.assertEqual(a, b)
+        os.remove('error.log')
+        os.remove('out.log')
 
 
 class MiddlewareTestCase(TestCase):

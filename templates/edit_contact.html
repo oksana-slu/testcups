@@ -57,7 +57,7 @@ Changes have been successfully saved
 </div>
 <form id="formContact" action="{% url contact_edit %}" method="post">
 <div id="form_container">
-
+{% csrf_token %}
 {% include "edit_contact_form.html" %}
 
 </div>
