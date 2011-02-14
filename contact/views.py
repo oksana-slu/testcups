@@ -1,8 +1,8 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from testcups.contact.models import Contact, Middleware
 from testcups.contact.forms import ContactForm
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson
 from django.template.loader import render_to_string
