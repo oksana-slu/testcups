@@ -2,6 +2,7 @@
 {% block title %}Middleware{% endblock %}
 {% block body %}
 <div style="float:left; width: 800px;">
+
 {% for item in middleware %}
 <br>
 <table border="1" width="90%">
@@ -36,7 +37,21 @@
         <td>
             {{ item.remote_addr }}
         </td>
-    </tr>     
+    </tr>
+    <tr>
+        <td width="30%">
+            priority
+        </td>            
+        <td>
+            <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{ item.id }}" name="id"/>
+            <input type="text" size="3" name="priority" value="{{ item.priority }}" />
+            <input value="Edit priority" name="priority_save" type="submit" />
+            </form>
+            
+        </td>
+    </tr>       
 </table>
 {% endfor %}
 </div> 

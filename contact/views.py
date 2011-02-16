@@ -15,7 +15,13 @@ def contact(request):
 
 
 def middleware(request):
-    middleware = Middleware.objects.all().order_by('-id')[0:10]
+    if request.method == 'POST':
+        item = Middleware.objects.get(id=request.POST['id'])        
+        item.priority = int(request.POST['priority'])
+        item.save()
+    
+    middleware = Middleware.objects.all().order_by('-priority', '-id')[0:10]
+    
     return render_to_response('middleware.html',
          context_instance=RequestContext(request, {'middleware': middleware}))
 
