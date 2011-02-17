@@ -26,7 +26,7 @@ class Middleware(models.Model):
     path_info = models.CharField(max_length=100)
     remote_addr = models.CharField(max_length=100)
     priority = models.IntegerField(default=0)
-    
+
 
 EVENT_CHOICES = (
     ('create', 'create'),

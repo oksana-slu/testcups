@@ -25,11 +25,12 @@ def middleware(request):
         return redirect('contact_middleware')
 
     priority_sort_prefix = '-'
-    if 'sort' in request.GET and request.GET['sort']=='1':
+    if 'sort' in request.GET and request.GET['sort'] == '1':
         priority_sort_prefix = ''
     sort = '1' if priority_sort_prefix == '' else '0'
 
-    middleware = Middleware.objects.all().order_by('%spriority' % priority_sort_prefix, '-id')[0:10]
+    middleware = Middleware.objects.all().order_by('%spriority'
+                                         % priority_sort_prefix, '-id')[0:10]
 
     return render_to_response('middleware.html',
          context_instance=RequestContext(request, {'middleware': middleware,
