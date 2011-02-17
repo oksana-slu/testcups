@@ -1,7 +1,56 @@
 {% extends "contact.html" %}
 {% block title %}Middleware{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.js"></script> 
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.validate.js"></script> 
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $("form").each(function(){
+	$(this).validate();
+    });
+});
+
+</script>
+ 
+<script type="text/javascript"> 
+$(document).ready(function() {
+    var messages = '{{ messages }}';
+ if (messages){
+     $('#bloc').hide();
+     $('#form_save').show();		    
+     $('#form_save').fadeOut(3000, function() {
+	 $('#form_save').hide();
+	 $('#bloc').show();
+     });
+ }
+}); 
+</script>   
+	   
+
+{% endblock script %}
 {% block body %}
 <div style="float:left; width: 800px;">
+<div id="bloc" style="height: 50px">&nbsp</div>
+<div id="form_save" style="display:none; color:green; height: 50px">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</div>
+<div style="width: 220px; float: right;" >
+<select onchange="location = '{% url contact_middleware %}?sort=' + this.options[this.selectedIndex].value;">
+    <option {% if sort == "1" %}selected=selected {% endif %}value="1">Ascending</option>
+    <option {% if sort == "0" %}selected=selected {% endif %}value="0">Descending</option>  
+</select>
+</div>
+<br>
 {% for item in middleware %}
 <br>
 <table border="1" width="90%">
@@ -36,7 +85,23 @@
         <td>
             {{ item.remote_addr }}
         </td>
-    </tr>     
+    </tr>
+    <tr>
+        <td width="30%">
+
+            
+            <label>priority</label>
+        </td>            
+        <td>
+        <form class="priorityForm" id="priorityForm{{ item.id }}" action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{ item.id }}" name="id"/>
+            <input type="text" size="3" class='required number' name="priority" value="{{ item.priority }}" />
+            <input value="Edit priority" name="priority_save" type="submit" />
+        </form>
+        </td>
+
+    </tr>       
 </table>
 {% endfor %}
 </div> 

@@ -7,7 +7,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 class MiddlewareAdmin(admin.ModelAdmin):
-    list_display = ('user', 'path_info')
+    list_display = ('user', 'path_info', 'priority')
 
 
 admin.site.register(Contact, ContactAdmin)

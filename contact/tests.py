@@ -18,7 +18,7 @@ class ContactTestCase(TestCase):
                   jabber="jabber", skype="skype", other_contacts="no")
 
     def testCRUD(self):
-        '''check work'''
+        '''check work signal processor'''
         id_obj = self.contact.id
         self.signal_obj = ModelLog.objects.get(model_log=self.contact,
                                                object_id=id_obj)
@@ -118,5 +118,15 @@ class MiddlewareTestCase(TestCase):
         self.middleware.delete()
 
     def testhttp(self):
+        self.user = User.objects.create_user('john', 'lennon@thebeatles.com',
+                                             'johnpassword')
+        page_login = self.client.post('/accounts/login/',
+                            {'username': 'john', 'password': 'johnpassword'})
         page = self.client.get('/middleware/')
         self.assertEqual(page.status_code, 200)
+        '''check the changes and saving the priority'''
+        self.middleware_priority = Middleware.objects.get(id=1)
+        self.middleware_priority.priority = 1
+        self.assertEqual(self.middleware_priority.priority, 1)
+        self.middleware_priority2 = Middleware.objects.get(id=2)
+        self.assertEqual(self.middleware_priority2.priority, 0)
