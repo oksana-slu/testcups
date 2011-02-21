@@ -1,12 +1,15 @@
 from django.test.client import Client
 from django.test import TestCase
-from testcups.contact.models import Contact, Middleware, ModelLog
-import unittest
+from testcups.contact.models import Contact, Middleware
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, Group, \
+                                        Message, ContentType
+from django.contrib.sessions.models import Session
+from django.contrib.sites.models import Site
+from django.contrib.admin.models import LogEntry
 from django.core import management
 import sys
-import filecmp
+import re
 import os
 
 
@@ -87,22 +90,34 @@ class EditContactTestCase(TestCase):
         management.call_command('printmod')
         sys.stderr = stderr
         sys.stdout = stdout
-        a = '''Error: Permission 33
-Error: Group 0
-Error: User 2
-Error: Message 0
-Error: ContentType 11
-Error: Session 1
-Error: Site 1
-Error: LogEntry 0
-Error: Contact 1
-Error: Middleware 7
-Error: ModelLog 52
+        a = '''Error: Permission (\d+)
+Error: Group (\d+)
+Error: User (\d+)
+Error: Message (\d+)
+Error: ContentType (\d+)
+Error: Session (\d+)
+Error: Site (\d+)
+Error: LogEntry (\d+)
+Error: Contact (\d+)
+Error: Middleware (\d+)
 '''
         f = open('error.log', 'r')
         b = f.read()
         f.close()
-        self.assertEqual(a, b)
+        result = re.findall(a, b, re.M)[0]
+        perm_c, group_c, user_c, msg_c, ct_c, sess_c, site_c, loge_c, \
+        cont_c, middl_c = result
+        self.assertEqual(int(perm_c), Permission.objects.all().count())
+        self.assertEqual(int(group_c), Group.objects.all().count())
+        self.assertEqual(int(user_c), User.objects.all().count())
+        self.assertEqual(int(msg_c), Message.objects.all().count())
+        self.assertEqual(int(ct_c), ContentType.objects.all().count())
+        self.assertEqual(int(sess_c), Session.objects.all().count())
+        self.assertEqual(int(site_c), Site.objects.all().count())
+        self.assertEqual(int(loge_c), LogEntry.objects.all().count())
+        self.assertEqual(int(cont_c), Contact.objects.all().count())
+        self.assertEqual(int(middl_c), Middleware.objects.all().count())
+
         os.remove('error.log')
         os.remove('out.log')
 
