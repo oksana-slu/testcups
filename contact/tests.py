@@ -1,6 +1,6 @@
 from django.test.client import Client
 from django.test import TestCase
-from testcups.contact.models import Contact, Middleware
+from testcups.contact.models import Contact, Middleware, ModelLog
 from django.conf import settings
 from django.contrib.auth.models import User, Permission, Group, \
                                         Message, ContentType
@@ -142,6 +142,13 @@ class MiddlewareTestCase(TestCase):
         '''check the changes and saving the priority'''
         self.middleware_priority = Middleware.objects.get(id=1)
         self.middleware_priority.priority = 1
+        self.middleware_priority.lang = 'max'
+        self.middleware_priority.save()
         self.assertEqual(self.middleware_priority.priority, 1)
         self.middleware_priority2 = Middleware.objects.get(id=2)
+        self.middleware_priority2.lang = 'min'
+        self.middleware_priority2.save()
         self.assertEqual(self.middleware_priority2.priority, 0)
+        page_sort = self.client.get('/middleware/?sort=0')
+        self.assertTrue(page_sort.content.find('max') < \
+                        page_sort.content.find('min'))

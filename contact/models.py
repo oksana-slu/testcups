@@ -4,6 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Message
 from django.contrib.sessions.models import Session
 from django.db.models.signals import post_save, post_delete
+from datetime import datetime
 
 
 class Contact(models.Model):
@@ -21,8 +22,9 @@ class Contact(models.Model):
 
 
 class Middleware(models.Model):
-    user = models.ForeignKey(User, null=True)
-    lang = models.CharField(max_length=100, null=True)
+    user = models.ForeignKey(User, blank=True, null=True, \
+                            related_name='loguser')
+    lang = models.CharField(max_length=100, blank=True)
     path_info = models.CharField(max_length=100)
     remote_addr = models.CharField(max_length=100)
     priority = models.IntegerField(default=0)
@@ -36,10 +38,10 @@ EVENT_CHOICES = (
 
 
 class ModelLog(models.Model):
-    model_log = models.ForeignKey(ContentType)
+    model_log = models.ForeignKey(ContentType, related_name='allmodels')
     object_id = models.IntegerField()
     event = models.CharField(max_length=6)
-    stamp = models.DateTimeField(auto_now_add=True)
+    stamp = models.DateTimeField(default=datetime.now())
 
 
 EVENT_CHOICES_DICT = {None: 'delete',
