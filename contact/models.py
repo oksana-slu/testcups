@@ -22,7 +22,8 @@ class Contact(models.Model):
 
 
 class Middleware(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, related_name='loguser')
+    user = models.ForeignKey(User, blank=True, null=True, \
+                            related_name='loguser')
     lang = models.CharField(max_length=100, blank=True)
     path_info = models.CharField(max_length=100)
     remote_addr = models.CharField(max_length=100)
